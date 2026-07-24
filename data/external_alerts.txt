@@ -1,0 +1,15 @@
+WATCHLIST HIT: Entity 'Offshore Holdings LLC' partially matches OFAC SDN list entry (score 0.82). Associated account ACC-1007 flagged for enhanced due diligence review.
+
+ADVERSE MEDIA: News search returned a 2026-06-18 article referencing 'Consulting Fees Ltd' in connection with an ongoing regulatory inquiry in a EU jurisdiction. No confirmed link to account holder identity yet.
+
+SANCTIONS SCREEN: Cross-border wire from ACC-1007 routed through a jurisdiction on the FATF high-risk list (counterparty country: IR). Screening engine confidence: HIGH.
+
+FRAUD ALERT: Device fingerprint for ACC-1012 changed twice within 48 hours immediately preceding two large outbound transfers to a crypto exchange. Pattern consistent with account takeover.
+
+DORMANT ACCOUNT REACTIVATION: ACC-1019 had no login or transaction activity for 11 months, then received a large inbound deposit followed by an immediate outbound transfer within the same business day.
+
+PEP SCREENING: Account holder for ACC-1007 identified as a politically exposed person (domestic PEP, government-adjacent role). Existing enhanced monitoring plan on file since account opening.
+
+STRUCTURING PATTERN: Automated monitoring detected three cash-equivalent deposits to ACC-1003 within a 7-day window, each just under the $10,000 CTR reporting threshold.
+
+GENERAL NOTE: Routine quarterly KYC refresh completed for ACC-1001, ACC-1002, and ACC-1004. No material changes to risk profile identified.

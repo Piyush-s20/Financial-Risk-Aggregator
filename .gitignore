@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+
+datamodels/target/
+
+frontend/node_modules/
+frontend/.next/
+frontend/next-env.d.ts
+
+.env

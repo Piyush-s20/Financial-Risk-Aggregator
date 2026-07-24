@@ -1,0 +1,173 @@
+{
+  "generated_at": "2026-07-24T11:32:55.751435+00:00",
+  "accounts_reviewed": 25,
+  "findings": [
+    {
+      "finding_id": "FIND-003",
+      "account_id": "ACC-1007",
+      "customer_name": "Customer 7",
+      "risk_score": 99,
+      "priority": "CRITICAL",
+      "categories": [
+        "EXTERNAL_ALERT",
+        "HIGH_RISK_GEOGRAPHY",
+        "PEP_CROSS_BORDER"
+      ],
+      "rationale": "1 transaction(s) routed through high-risk jurisdictions: ['MM']. PEP-flagged account with 21 cross-border transaction(s) outside country of residence (US). WATCHLIST HIT. SANCTIONS SCREEN. PEP SCREENING.",
+      "evidence_refs": [
+        "TXN-HIGH-9038",
+        "TXN-00358",
+        "TXN-00062",
+        "TXN-00330",
+        "TXN-00009",
+        "TXN-00283",
+        "TXN-00379",
+        "TXN-00095",
+        "TXN-00361",
+        "TXN-00345",
+        "TXN-00369",
+        "TXN-00127",
+        "TXN-00031",
+        "TXN-00126",
+        "TXN-00220",
+        "TXN-00105",
+        "TXN-00175",
+        "TXN-HIGH-9038",
+        "TXN-00381",
+        "TXN-00364",
+        "TXN-00187",
+        "TXN-00232",
+        "ALERT: WATCHLIST HIT: Entity 'Offshore Holdings LLC' partially matc...",
+        "ALERT: SANCTIONS SCREEN: Cross-border wire from ACC-1007 routed thr...",
+        "ALERT: PEP SCREENING: Account holder for ACC-1007 identified as a p..."
+      ],
+      "confidence": "HIGH",
+      "recommended_action": "Escalate to sanctions/OFAC screening team for manual match review."
+    },
+    {
+      "finding_id": "FIND-006",
+      "account_id": "ACC-1019",
+      "customer_name": "Customer 19",
+      "risk_score": 55,
+      "priority": "CRITICAL",
+      "categories": [
+        "DORMANT_REACTIVATION",
+        "EXTERNAL_ALERT",
+        "RAPID_FUND_MOVEMENT"
+      ],
+      "rationale": "$62,342.89 moved across 3 transactions within 72h. Account inactive for 354 days before 17 new transaction(s) appeared. DORMANT ACCOUNT REACTIVATION.",
+      "evidence_refs": [
+        "TXN-00329",
+        "TXN-DORM-5839",
+        "TXN-00097",
+        "TXN-00190",
+        "TXN-00123",
+        "TXN-00076",
+        "TXN-00052",
+        "TXN-00201",
+        "TXN-00080",
+        "TXN-00065",
+        "TXN-00219",
+        "TXN-00254",
+        "TXN-00329",
+        "TXN-DORM-5839",
+        "TXN-00097",
+        "TXN-00339",
+        "TXN-00274",
+        "TXN-00153",
+        "TXN-00237",
+        "TXN-00271",
+        "ALERT: DORMANT ACCOUNT REACTIVATION: ACC-1019 had no login or trans..."
+      ],
+      "confidence": "HIGH",
+      "recommended_action": "Verify identity via out-of-band contact before releasing funds."
+    },
+    {
+      "finding_id": "FIND-001",
+      "account_id": "ACC-1003",
+      "customer_name": "Customer 3",
+      "risk_score": 50,
+      "priority": "HIGH",
+      "categories": [
+        "EXTERNAL_ALERT",
+        "STRUCTURING"
+      ],
+      "rationale": "3 transactions just under the $10,000 reporting threshold within 7 days. STRUCTURING PATTERN.",
+      "evidence_refs": [
+        "TXN-STRU-8161",
+        "TXN-STRU-6580",
+        "TXN-STRU-1485",
+        "ALERT: STRUCTURING PATTERN: Automated monitoring detected three cas..."
+      ],
+      "confidence": "HIGH",
+      "recommended_action": "File internal SAR draft; request source-of-funds documentation."
+    },
+    {
+      "finding_id": "FIND-002",
+      "account_id": "ACC-1004",
+      "customer_name": "Customer 4",
+      "risk_score": 45,
+      "priority": "MEDIUM",
+      "categories": [
+        "DEVICE_CHANGE_LARGE_TRANSFER"
+      ],
+      "rationale": "Device fingerprint changed within 30 days, coinciding with 1 large outbound transfer(s). Possible account takeover.",
+      "evidence_refs": [
+        "TXN-00209"
+      ],
+      "confidence": "MEDIUM",
+      "recommended_action": "Suspend outbound transfers; trigger account takeover playbook."
+    },
+    {
+      "finding_id": "FIND-004",
+      "account_id": "ACC-1012",
+      "customer_name": "Customer 12",
+      "risk_score": 35,
+      "priority": "MEDIUM",
+      "categories": [
+        "EXTERNAL_ALERT",
+        "RAPID_FUND_MOVEMENT"
+      ],
+      "rationale": "$173,500.00 moved across 2 transactions within 72h. FRAUD ALERT.",
+      "evidence_refs": [
+        "TXN-RAPI-7150",
+        "TXN-RAPI-7227",
+        "ALERT: FRAUD ALERT: Device fingerprint for ACC-1012 changed twice w..."
+      ],
+      "confidence": "HIGH",
+      "recommended_action": "Cross-reference with case management system for prior alerts."
+    },
+    {
+      "finding_id": "FIND-005",
+      "account_id": "ACC-1015",
+      "customer_name": "Customer 15",
+      "risk_score": 30,
+      "priority": "MEDIUM",
+      "categories": [
+        "PEP_CROSS_BORDER"
+      ],
+      "rationale": "PEP-flagged account with 15 cross-border transaction(s) outside country of residence (AU).",
+      "evidence_refs": [
+        "TXN-00387",
+        "TXN-00260",
+        "TXN-00119",
+        "TXN-00280",
+        "TXN-00323",
+        "TXN-00061",
+        "TXN-00144",
+        "TXN-00166",
+        "TXN-00106",
+        "TXN-00378",
+        "TXN-00135",
+        "TXN-00131",
+        "TXN-00026",
+        "TXN-00111",
+        "TXN-00304"
+      ],
+      "confidence": "MEDIUM",
+      "recommended_action": "Confirm enhanced due diligence plan is current; review with MLRO."
+    }
+  ],
+  "portfolio_summary": "6 of 25 accounts flagged for review. 2 critical, 1 high priority. Top drivers: structuring, high-risk geography exposure, and rapid fund movement corroborated by external watchlist/adverse-media alerts.",
+  "generation_mode": "offline_fallback"
+}
