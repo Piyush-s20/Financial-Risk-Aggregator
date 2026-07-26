@@ -1,207 +1,175 @@
 {
-  "generated_at": "2026-07-25T17:27:42.969887Z",
+  "generated_at": "2026-07-17T12:00:00Z",
   "accounts_reviewed": 25,
   "findings": [
     {
-      "finding_id": "FIND-003",
+      "finding_id": "FIND-1007",
       "account_id": "ACC-1007",
       "customer_name": "Customer 7",
-      "risk_score": 99,
+      "risk_score": 98,
       "priority": "CRITICAL",
       "categories": [
-        "EXTERNAL_ALERT",
-        "HIGH_RISK_GEOGRAPHY",
-        "PEP_CROSS_BORDER",
-        "RAPID_FUND_MOVEMENT"
+        "PEP",
+        "Sanctions Risk",
+        "High-Risk Geography",
+        "Rapid Fund Movement"
       ],
-      "rationale": "1 transaction(s) routed through high-risk jurisdictions: ['SY']. $70,420.27 moved across 4 transactions within 72h. PEP-flagged account with 15 cross-border transaction(s) outside country of residence (GB). WATCHLIST HIT. SANCTIONS SCREEN. PEP SCREENING.",
+      "rationale": "The account holder is a confirmed domestic PEP residing in the UK (GB). Multiple high-risk indicators converged on this account within a short window. A high-value wire of $42,000.00 (TXN-HIGH-8052) was routed to 'Offshore Holdings LLC' in Syria (SY), a high-risk jurisdiction. External alerts indicate this transaction was also routed through Iran (IR), a FATF high-risk jurisdiction, and that 'Offshore Holdings LLC' partially matches an OFAC SDN list entry (score 0.82). Additionally, the account exhibited rapid fund movement of $70,420.27 across 4 transactions within 72 hours (TXN-00209, TXN-00340, TXN-00099, TXN-HIGH-8052).",
       "evidence_refs": [
         "TXN-HIGH-8052",
         "TXN-00209",
         "TXN-00340",
         "TXN-00099",
-        "TXN-HIGH-8052",
-        "TXN-00009",
-        "TXN-00120",
-        "TXN-00119",
-        "TXN-00370",
-        "TXN-00202",
-        "TXN-00104",
-        "TXN-00186",
-        "TXN-00209",
-        "TXN-00340",
-        "TXN-00099",
-        "TXN-HIGH-8052",
-        "TXN-00071",
-        "TXN-00115",
-        "TXN-00150",
-        "TXN-00390",
-        "ALERT: WATCHLIST HIT: Entity 'Offshore Holdings LLC' partially matc...",
-        "ALERT: SANCTIONS SCREEN: Cross-border wire from ACC-1007 routed thr...",
-        "ALERT: PEP SCREENING: Account holder for ACC-1007 identified as a p..."
+        "WATCHLIST HIT: Entity 'Offshore Holdings LLC' partially matches OFAC SDN list entry (score 0.82)",
+        "SANCTIONS SCREEN: Cross-border wire from ACC-1007 routed through a jurisdiction on the FATF high-risk list (counterparty country: IR)"
       ],
       "confidence": "HIGH",
-      "recommended_action": "Escalate to sanctions/OFAC screening team for manual match review."
+      "recommended_action": "Immediately freeze the account, block all outbound transactions, and file an urgent Suspicious Activity Report (SAR) regarding potential sanctions evasion and OFAC SDN match."
     },
     {
-      "finding_id": "FIND-001",
-      "account_id": "ACC-1003",
-      "customer_name": "Customer 3",
-      "risk_score": 95,
-      "priority": "CRITICAL",
-      "categories": [
-        "EXTERNAL_ALERT",
-        "SHARED_DEVICE_FINGERPRINT",
-        "STRUCTURING"
-      ],
-      "rationale": "3 transactions just under the $10,000 reporting threshold within 7 days. Device fingerprint FP-9F31C7A0 also used by ACC-1021 \u2014 possible mule network or shared access. STRUCTURING PATTERN.",
-      "evidence_refs": [
-        "TXN-STRU-6890",
-        "TXN-STRU-5067",
-        "TXN-STRU-1725",
-        "DEVICE:FP-9F31C7A0",
-        "ACC-1021",
-        "ALERT: STRUCTURING PATTERN: Automated monitoring detected three cas..."
-      ],
-      "confidence": "HIGH",
-      "recommended_action": "Cross-reference linked accounts for common ownership or account takeover."
-    },
-    {
-      "finding_id": "FIND-004",
+      "finding_id": "FIND-1012",
       "account_id": "ACC-1012",
       "customer_name": "Customer 12",
-      "risk_score": 65,
-      "priority": "CRITICAL",
+      "risk_score": 88,
+      "priority": "HIGH",
       "categories": [
-        "EXTERNAL_ALERT",
-        "RAPID_FUND_MOVEMENT",
-        "SHARED_IP_ADDRESS"
+        "Fraud",
+        "Rapid Fund Movement",
+        "Shared IP Address"
       ],
-      "rationale": "$175,022.26 moved across 4 transactions within 72h. Login IP 10.44.201.77 also used by ACC-1024 within the review window \u2014 corroborate with device data before escalating. FRAUD ALERT.",
+      "rationale": "This high-risk rated account exhibited rapid fund movement of $175,022.26 across 4 transactions within 72 hours, driven by two massive outbound transfers to a crypto exchange totaling $173,500.00 (TXN-RAPI-2615 and TXN-RAPI-9366). An external fraud alert indicates the device fingerprint changed twice within 48 hours immediately preceding these transfers, a pattern highly indicative of Account Takeover (ATO). Furthermore, the account shared a login IP address (10.44.201.77) with ACC-1024 during the review window.",
       "evidence_refs": [
         "TXN-RAPI-2615",
         "TXN-RAPI-9366",
         "TXN-00067",
         "TXN-00264",
         "IP:10.44.201.77",
-        "ACC-1024",
-        "ALERT: FRAUD ALERT: Device fingerprint for ACC-1012 changed twice w..."
+        "FRAUD ALERT: Device fingerprint for ACC-1012 changed twice within 48 hours"
       ],
       "confidence": "HIGH",
-      "recommended_action": "Corroborate with device data; shared IP alone may be a household or NAT."
+      "recommended_action": "Temporarily restrict outbound transfers, initiate out-of-band identity verification with the customer to confirm transaction authorization, and investigate the linked account ACC-1024."
     },
     {
-      "finding_id": "FIND-005",
-      "account_id": "ACC-1015",
-      "customer_name": "Customer 15",
-      "risk_score": 65,
+      "finding_id": "FIND-1003",
+      "account_id": "ACC-1003",
+      "customer_name": "Customer 3",
+      "risk_score": 82,
       "priority": "HIGH",
       "categories": [
-        "PEP_CROSS_BORDER",
-        "SHARED_BENEFICIARY"
+        "Structuring",
+        "Mule Network",
+        "Shared Device Fingerprint"
       ],
-      "rationale": "PEP-flagged account with 11 cross-border transaction(s) outside country of residence (CA). Also wires beneficiary 'Rapid Settlement Corp' (BEN-0099), shared with ACC-1004 \u2014 possible layering or mule network.",
+      "rationale": "The account was flagged for structuring behavior, characterized by three cash-equivalent deposits just under the $10,000 CTR reporting threshold within a 7-day window (TXN-STRU-1725, TXN-STRU-6890, TXN-STRU-5067). This is corroborated by an external structuring alert. Additionally, the account shares its device fingerprint (FP-9F31C7A0) with ACC-1021, suggesting a potential shared-access or mule network setup.",
       "evidence_refs": [
+        "TXN-STRU-1725",
+        "TXN-STRU-6890",
+        "TXN-STRU-5067",
+        "DEVICE:FP-9F31C7A0",
+        "ACC-1021",
+        "STRUCTURING PATTERN: Automated monitoring detected three cash-equivalent deposits to ACC-1003"
+      ],
+      "confidence": "HIGH",
+      "recommended_action": "File a SAR for structuring, review all transaction history associated with device fingerprint FP-9F31C7A0, and perform enhanced due diligence on both ACC-1003 and ACC-1021."
+    },
+    {
+      "finding_id": "FIND-1019",
+      "account_id": "ACC-1019",
+      "customer_name": "Customer 19",
+      "risk_score": 80,
+      "priority": "HIGH",
+      "categories": [
+        "Dormant Reactivation",
+        "Rapid Fund Movement"
+      ],
+      "rationale": "The account was inactive for 304 days before suddenly reactivating with 16 new transactions totaling $74,310.26. The reactivation was marked by a massive cash deposit of $61,000.00 (TXN-DORM-7408) at a kiosk in Germany, followed by immediate rapid outbound transfers (such as TXN-00393 for $3,024.81) within the same business day. This pattern is highly indicative of money laundering or account takeover.",
+      "evidence_refs": [
+        "TXN-DORM-7408",
+        "TXN-00393",
+        "TXN-00194",
+        "TXN-00068",
+        "DORMANT ACCOUNT REACTIVATION: ACC-1019 had no login or transaction activity for 11 months"
+      ],
+      "confidence": "HIGH",
+      "recommended_action": "Restrict the account immediately, request formal verification of the source of funds for the $61,000.00 deposit, and verify the identity of the transactor."
+    },
+    {
+      "finding_id": "FIND-1015",
+      "account_id": "ACC-1015",
+      "customer_name": "Customer 15",
+      "risk_score": 72,
+      "priority": "HIGH",
+      "categories": [
+        "PEP",
+        "Shared Beneficiary",
+        "Cross-Border Activity"
+      ],
+      "rationale": "The account holder is a PEP residing in Canada (CA) who executed 11 cross-border transactions outside their country of residence. Most significantly, the account sent an $18,200.00 wire (TXN-SHAR-6651) to 'Rapid Settlement Corp' (BEN-0099). This beneficiary is shared with ACC-1004, raising concerns of potential layering or a shared illicit payment channel.",
+      "evidence_refs": [
+        "TXN-SHAR-6651",
         "TXN-00246",
         "TXN-00030",
         "TXN-00083",
         "TXN-00137",
-        "TXN-00100",
-        "TXN-00031",
-        "TXN-00112",
-        "TXN-SHAR-6651",
-        "TXN-00036",
-        "TXN-00249",
-        "TXN-00103",
-        "TXN-SHAR-6651"
-      ],
-      "confidence": "MEDIUM",
-      "recommended_action": "Investigate linked accounts as a potential mule ring before releasing further wires."
-    },
-    {
-      "finding_id": "FIND-002",
-      "account_id": "ACC-1004",
-      "customer_name": "Customer 4",
-      "risk_score": 35,
-      "priority": "MEDIUM",
-      "categories": [
-        "SHARED_BENEFICIARY"
-      ],
-      "rationale": "Also wires beneficiary 'Rapid Settlement Corp' (BEN-0099), shared with ACC-1015 \u2014 possible layering or mule network.",
-      "evidence_refs": [
-        "TXN-SHAR-9199"
-      ],
-      "confidence": "MEDIUM",
-      "recommended_action": "Investigate linked accounts as a potential mule ring before releasing further wires."
-    },
-    {
-      "finding_id": "FIND-006",
-      "account_id": "ACC-1019",
-      "customer_name": "Customer 19",
-      "risk_score": 35,
-      "priority": "MEDIUM",
-      "categories": [
-        "DORMANT_REACTIVATION",
-        "EXTERNAL_ALERT"
-      ],
-      "rationale": "Account inactive for 304 days before 16 new transaction(s) appeared. DORMANT ACCOUNT REACTIVATION.",
-      "evidence_refs": [
-        "TXN-00342",
-        "TXN-00166",
-        "TXN-00006",
-        "TXN-00191",
-        "TXN-00386",
-        "TXN-00277",
-        "TXN-00151",
-        "TXN-00285",
-        "TXN-00208",
-        "TXN-00399",
-        "TXN-00217",
-        "TXN-00184",
-        "TXN-DORM-7408",
-        "TXN-00068",
-        "TXN-00194",
-        "TXN-00393",
-        "ALERT: DORMANT ACCOUNT REACTIVATION: ACC-1019 had no login or trans..."
+        "TXN-00100"
       ],
       "confidence": "HIGH",
-      "recommended_action": "Verify identity via out-of-band contact before releasing funds."
+      "recommended_action": "Investigate the business relationship with 'Rapid Settlement Corp' and coordinate with the analyst reviewing ACC-1004 to determine if a broader network is active."
     },
     {
-      "finding_id": "FIND-007",
+      "finding_id": "FIND-1021",
       "account_id": "ACC-1021",
       "customer_name": "Customer 21",
-      "risk_score": 35,
+      "risk_score": 60,
       "priority": "MEDIUM",
       "categories": [
-        "SHARED_DEVICE_FINGERPRINT"
+        "Mule Network",
+        "Shared Device Fingerprint"
       ],
-      "rationale": "Device fingerprint FP-9F31C7A0 also used by ACC-1003 \u2014 possible mule network or shared access.",
+      "rationale": "This account shares its device fingerprint (FP-9F31C7A0) with ACC-1003, which is currently flagged for high-severity structuring. While ACC-1021's individual transactions are smaller (e.g., TXN-00272 for $1,450.23), the shared device access strongly suggests a potential mule network or multi-account control by a single actor.",
       "evidence_refs": [
         "DEVICE:FP-9F31C7A0",
-        "ACC-1003"
+        "ACC-1003",
+        "TXN-00272"
       ],
-      "confidence": "MEDIUM",
-      "recommended_action": "Cross-reference linked accounts for common ownership or account takeover."
+      "confidence": "HIGH",
+      "recommended_action": "Conduct a holistic review of all accounts accessing the platform via device FP-9F31C7A0 and restrict access if unauthorized multi-account control is confirmed."
     },
     {
-      "finding_id": "FIND-008",
+      "finding_id": "FIND-1024",
       "account_id": "ACC-1024",
       "customer_name": "Customer 24",
-      "risk_score": 30,
+      "risk_score": 55,
       "priority": "MEDIUM",
       "categories": [
-        "SHARED_IP_ADDRESS"
+        "Shared IP Address"
       ],
-      "rationale": "Login IP 10.44.201.77 also used by ACC-1012 within the review window \u2014 corroborate with device data before escalating.",
+      "rationale": "This high-KYC-risk account shared a login IP address (10.44.201.77) with ACC-1012, which is flagged for rapid fund movement and potential account takeover. Although the transaction volume is moderate, the shared IP address requires investigation to rule out co-conspirator activity or shared network infrastructure.",
       "evidence_refs": [
         "IP:10.44.201.77",
         "ACC-1012"
       ],
       "confidence": "MEDIUM",
-      "recommended_action": "Corroborate with device data; shared IP alone may be a household or NAT."
+      "recommended_action": "Corroborate IP login data with device fingerprints and location history to determine if the shared IP is a public VPN/proxy or indicates co-located users."
+    },
+    {
+      "finding_id": "FIND-1004",
+      "account_id": "ACC-1004",
+      "customer_name": "Customer 4",
+      "risk_score": 50,
+      "priority": "MEDIUM",
+      "categories": [
+        "Shared Beneficiary"
+      ],
+      "rationale": "The account sent a high-value wire of $15,500.00 (TXN-SHAR-9199) to beneficiary 'Rapid Settlement Corp' (BEN-0099). This beneficiary is shared with PEP account ACC-1015, raising concerns of potential layering or a shared illicit payment channel, despite a routine quarterly KYC refresh showing no material changes.",
+      "evidence_refs": [
+        "TXN-SHAR-9199",
+        "GENERAL NOTE: Routine quarterly KYC refresh completed for ACC-1001, ACC-1002, and ACC-1004"
+      ],
+      "confidence": "HIGH",
+      "recommended_action": "Investigate the business purpose of the payment to 'Rapid Settlement Corp' and cross-reference with the findings on ACC-1015."
     }
   ],
-  "portfolio_summary": "8 of 25 accounts flagged for review. 3 critical, 1 high priority. Top drivers: structuring, high-risk geography exposure, and rapid fund movement corroborated by external watchlist/adverse-media alerts.",
-  "generation_mode": "offline_fallback"
+  "portfolio_summary": "The portfolio review identified 8 accounts with significant financial crime risk. The most critical finding involves ACC-1007, a PEP routing funds to a potential OFAC SDN match in Syria/Iran. High-priority concerns also include potential account takeover/fraud in ACC-1012, structuring in ACC-1003, and dormant reactivation in ACC-1019. Shared device fingerprints and IP addresses across multiple accounts suggest coordinated mule network activity.",
+  "generation_mode": "gemini"
 }

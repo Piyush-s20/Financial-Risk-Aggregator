@@ -15,19 +15,18 @@ def call_gemini(fused_dataset: dict, detector_signals: list[dict]) -> dict:
     if not api_key:
         raise GeminiUnavailableError("GEMINI_API_KEY not set")
 
-    import google.generativeai as genai
+    from google import genai
+    from google.genai import types
 
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel(
-        model_name=DEFAULT_MODEL,
-        system_instruction=SYSTEM_PROMPT,
-    )
+    client = genai.Client(api_key=api_key)
 
     user_prompt = build_user_prompt(fused_dataset, detector_signals)
 
-    response = model.generate_content(
-        user_prompt,
-        generation_config=genai.GenerationConfig(
+    response = client.models.generate_content(
+        model=DEFAULT_MODEL,
+        contents=user_prompt,
+        config=types.GenerateContentConfig(
+            system_instruction=SYSTEM_PROMPT,
             response_mime_type="application/json",
             response_schema=RESPONSE_SCHEMA,
             temperature=0.2,
