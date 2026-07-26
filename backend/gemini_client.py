@@ -3,7 +3,7 @@ import os
 
 from prompt_templates import RESPONSE_SCHEMA, SYSTEM_PROMPT, build_user_prompt
 
-DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+DEFAULT_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
 
 
 class GeminiUnavailableError(RuntimeError):
