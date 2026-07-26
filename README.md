@@ -140,7 +140,7 @@ copied to `frontend/public/data/risk_summary.json` for the dashboard.
 
 - **Python 3 + Pandas** — mock data generation, ingestion, fusion, rule-based anomaly detection
 - **Pydantic** — validates `risk_summary.json` against the contract before it's ever written
-- **Gemini API** (`google-generativeai`, `gemini-2.5-flash` by default) — risk correlation,
+- **Gemini API** (`google-generativeai`, `gemini-3.5-flash` by default) — risk correlation,
   scoring, and rationale generation, with a deterministic offline fallback for demoing without
   an API key; the frontend's chat panel calls the same API directly via `fetch` for NLQ
 - **Java 17 + Jackson + Maven** — typed data models and an internal validation/prioritisation
