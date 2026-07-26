@@ -5,14 +5,21 @@ from datetime import datetime, timezone
 SEVERITY_WEIGHT = {"HIGH": 35, "MEDIUM": 20, "LOW": 10}
 
 CATEGORY_ACTION = {
+    "SHARED_BENEFICIARY": "Investigate linked accounts as a potential mule ring before releasing further wires.",
+    "SHARED_DEVICE_FINGERPRINT": "Cross-reference linked accounts for common ownership or account takeover.",
     "STRUCTURING": "File internal SAR draft; request source-of-funds documentation.",
     "HIGH_RISK_GEOGRAPHY": "Escalate to sanctions/OFAC screening team for manual match review.",
+    "DEVICE_CHANGE_LARGE_TRANSFER": "Suspend outbound transfers; trigger account takeover playbook.",
+    "SHARED_IP_ADDRESS": "Corroborate with device data; shared IP alone may be a household or NAT.",
     "RAPID_FUND_MOVEMENT": "Freeze pending transfers and contact customer to verify intent.",
     "DORMANT_REACTIVATION": "Verify identity via out-of-band contact before releasing funds.",
     "PEP_CROSS_BORDER": "Confirm enhanced due diligence plan is current; review with MLRO.",
-    "DEVICE_CHANGE_LARGE_TRANSFER": "Suspend outbound transfers; trigger account takeover playbook.",
     "EXTERNAL_ALERT": "Cross-reference with case management system for prior alerts.",
 }
+
+# Highest-priority category wins the recommended_action when a finding spans
+# several categories, rather than depending on set iteration order.
+ACTION_PRIORITY_ORDER = list(CATEGORY_ACTION.keys())
 
 
 NOISE_ALERT_PREFIXES = ("GENERAL NOTE:",)
@@ -85,8 +92,8 @@ def synthesize(fused_dataset: dict, detector_signals: list[dict]) -> dict:
             evidence_refs.extend(s.get("evidence", []))
         evidence_refs.extend([f"ALERT: {a[:60]}..." for a in acct_alerts])
 
-        action = CATEGORY_ACTION.get(
-            next(iter(distinct_types), "EXTERNAL_ALERT"),
+        action = next(
+            (CATEGORY_ACTION[c] for c in ACTION_PRIORITY_ORDER if c in distinct_types),
             "Route to analyst for manual review.",
         )
 

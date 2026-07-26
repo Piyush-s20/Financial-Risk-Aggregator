@@ -1,0 +1,26 @@
+services:
+  risk-engine:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    volumes:
+      - risk_data:/app/output
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - risk_data:/app/public/data
+      - risk_data:/output
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+    depends_on:
+      risk-engine:
+        condition: service_completed_successfully
+
+volumes:
+  risk_data:

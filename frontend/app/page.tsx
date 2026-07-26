@@ -1,15 +1,9 @@
-import { promises as fs } from "fs";
-import path from "path";
-import type { RiskSummary } from "@/types/risk";
+import { loadRiskSummary } from "@/lib/loadRiskSummary";
 import StatTile from "@/components/StatTile";
 import PriorityDistribution from "@/components/PriorityDistribution";
-import FindingsExplorer from "@/components/FindingsExplorer";
+import RiskWorkspace from "@/components/RiskWorkspace";
 
-async function loadRiskSummary(): Promise<RiskSummary> {
-  const filePath = path.join(process.cwd(), "public", "data", "risk_summary.json");
-  const raw = await fs.readFile(filePath, "utf-8");
-  return JSON.parse(raw) as RiskSummary;
-}
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const summary = await loadRiskSummary();
@@ -71,7 +65,8 @@ export default async function Home() {
               <li>
                 <span className="font-semibold text-zinc-800 dark:text-zinc-100">2. Detect.</span>{" "}
                 Deterministic rules flag structuring, high-risk geography, rapid fund movement,
-                dormant reactivation, PEP cross-border activity, and device-change patterns.
+                dormant reactivation, PEP cross-border activity, device-change takeover, and
+                entity links (shared device fingerprints, IPs, or wire beneficiaries).
               </li>
               <li>
                 <span className="font-semibold text-zinc-800 dark:text-zinc-100">3. Synthesize.</span>{" "}
@@ -80,8 +75,8 @@ export default async function Home() {
               </li>
               <li>
                 <span className="font-semibold text-zinc-800 dark:text-zinc-100">4. Review.</span>{" "}
-                Analysts triage this dashboard by priority, expanding a row for rationale and
-                evidence identifiers.
+                Analysts triage by priority, ask the chat panel plain-English questions, and
+                record a True Positive / False Positive / Escalated disposition per finding.
               </li>
             </ol>
           </div>
@@ -89,7 +84,7 @@ export default async function Home() {
       </section>
 
       <section className="mt-6">
-        <FindingsExplorer findings={summary.findings} />
+        <RiskWorkspace findings={summary.findings} />
       </section>
     </main>
   );

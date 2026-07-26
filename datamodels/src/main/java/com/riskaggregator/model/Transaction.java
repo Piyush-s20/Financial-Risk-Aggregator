@@ -33,6 +33,12 @@ public final class Transaction {
     @JsonProperty("mcc_code")
     private int mccCode;
 
+    @JsonProperty("counterparty_id")
+    private String counterpartyId;
+
+    @JsonProperty("counterparty_name")
+    private String counterpartyName;
+
     public Transaction() {
     }
 
@@ -106,5 +112,21 @@ public final class Transaction {
 
     public void setMccCode(int mccCode) {
         this.mccCode = mccCode;
+    }
+
+    public String getCounterpartyId() {
+        return counterpartyId;
+    }
+
+    public void setCounterpartyId(String counterpartyId) {
+        this.counterpartyId = counterpartyId;
+    }
+
+    public String getCounterpartyName() {
+        return counterpartyName;
+    }
+
+    public void setCounterpartyName(String counterpartyName) {
+        this.counterpartyName = counterpartyName;
     }
 }

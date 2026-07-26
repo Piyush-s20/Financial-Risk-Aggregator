@@ -1,19 +1,64 @@
 "use client";
 
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { PRIORITY_ORDER, type Priority, type RiskFinding } from "@/types/risk";
+import type { DispositionRecord, DispositionStatus } from "@/lib/schemas/disposition";
 import PriorityBadge from "./PriorityBadge";
+import DispositionControl from "./DispositionControl";
 
 const FILTERS: Array<Priority | "ALL"> = ["ALL", ...PRIORITY_ORDER];
 
-export default function FindingsExplorer({ findings }: { findings: RiskFinding[] }) {
+export default function FindingsExplorer({
+  findings,
+  restrictToIds,
+}: {
+  findings: RiskFinding[];
+  restrictToIds?: string[] | null;
+}) {
   const [filter, setFilter] = useState<Priority | "ALL">("ALL");
   const [query, setQuery] = useState("");
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [dispositions, setDispositions] = useState<Record<string, DispositionRecord>>({});
+
+  useEffect(() => {
+    fetch("/api/dispositions")
+      .then((res) => res.json())
+      .then((data) => setDispositions(data))
+      .catch(() => {
+        /* dispositions are a nice-to-have; leave the table usable without them */
+      });
+  }, []);
+
+  async function updateDisposition(findingId: string, status: DispositionStatus) {
+    const previous = dispositions[findingId];
+    setDispositions((prev) => ({
+      ...prev,
+      [findingId]: {
+        finding_id: findingId,
+        status,
+        updated_at: new Date().toISOString(),
+        updated_by: "analyst",
+      },
+    }));
+    try {
+      const res = await fetch("/api/dispositions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ finding_id: findingId, status }),
+      });
+      if (!res.ok) throw new Error("failed to persist disposition");
+      const saved: DispositionRecord = await res.json();
+      setDispositions((prev) => ({ ...prev, [findingId]: saved }));
+    } catch {
+      setDispositions((prev) => ({ ...prev, [findingId]: previous as DispositionRecord }));
+    }
+  }
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
+    const restrictSet = restrictToIds ? new Set(restrictToIds) : null;
     return findings
+      .filter((f) => !restrictSet || restrictSet.has(f.finding_id))
       .filter((f) => filter === "ALL" || f.priority === filter)
       .filter(
         (f) =>
@@ -23,12 +68,12 @@ export default function FindingsExplorer({ findings }: { findings: RiskFinding[]
           f.categories.some((c) => c.toLowerCase().includes(q))
       )
       .sort((a, b) => b.risk_score - a.risk_score);
-  }, [findings, filter, query]);
+  }, [findings, filter, query, restrictToIds]);
 
   return (
     <div className="rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
       <div className="flex flex-col gap-3 border-b border-zinc-200 p-4 dark:border-zinc-800 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {FILTERS.map((f) => (
             <button
               key={f}
@@ -42,6 +87,11 @@ export default function FindingsExplorer({ findings }: { findings: RiskFinding[]
               {f === "ALL" ? "All" : f.charAt(0) + f.slice(1).toLowerCase()}
             </button>
           ))}
+          {restrictToIds ? (
+            <span className="rounded-full bg-accent/10 px-2.5 py-1 text-xs font-medium text-accent dark:text-accent-dark">
+              Filtered by AI query ({restrictToIds.length})
+            </span>
+          ) : null}
         </div>
         <input
           type="text"
@@ -53,7 +103,7 @@ export default function FindingsExplorer({ findings }: { findings: RiskFinding[]
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[860px] text-left text-sm">
+        <table className="w-full min-w-[960px] text-left text-sm">
           <thead>
             <tr className="border-b border-zinc-200 text-xs uppercase tracking-wide text-zinc-500 dark:border-zinc-800 dark:text-zinc-400">
               <th className="px-4 py-3 font-medium">Priority</th>
@@ -62,6 +112,7 @@ export default function FindingsExplorer({ findings }: { findings: RiskFinding[]
               <th className="px-4 py-3 font-medium">Categories</th>
               <th className="px-4 py-3 font-medium">Confidence</th>
               <th className="px-4 py-3 font-medium">Recommended action</th>
+              <th className="px-4 py-3 font-medium">Disposition</th>
             </tr>
           </thead>
           <tbody>
@@ -107,10 +158,16 @@ export default function FindingsExplorer({ findings }: { findings: RiskFinding[]
                     <td className="px-4 py-3 text-zinc-600 dark:text-zinc-300">
                       {finding.recommended_action}
                     </td>
+                    <td className="px-4 py-3">
+                      <DispositionControl
+                        current={dispositions[finding.finding_id]?.status}
+                        onChange={(status) => updateDisposition(finding.finding_id, status)}
+                      />
+                    </td>
                   </tr>
                   {expanded ? (
                     <tr className="border-b border-zinc-100 bg-zinc-50 dark:border-zinc-800/60 dark:bg-zinc-800/30">
-                      <td colSpan={6} className="px-4 py-4">
+                      <td colSpan={7} className="px-4 py-4">
                         <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
                           AI rationale
                         </p>
@@ -130,6 +187,12 @@ export default function FindingsExplorer({ findings }: { findings: RiskFinding[]
                             </span>
                           ))}
                         </div>
+                        {dispositions[finding.finding_id] ? (
+                          <p className="mt-3 text-[11px] text-zinc-400 dark:text-zinc-500">
+                            Disposition last updated{" "}
+                            {new Date(dispositions[finding.finding_id].updated_at).toLocaleString()}
+                          </p>
+                        ) : null}
                       </td>
                     </tr>
                   ) : null}
@@ -138,7 +201,7 @@ export default function FindingsExplorer({ findings }: { findings: RiskFinding[]
             })}
             {visible.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-zinc-500 dark:text-zinc-400">
+                <td colSpan={7} className="px-4 py-8 text-center text-zinc-500 dark:text-zinc-400">
                   No findings match the current filter.
                 </td>
               </tr>

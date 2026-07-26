@@ -36,6 +36,12 @@ public final class AccountActivity {
     @JsonProperty("device_change_flag_30d")
     private boolean deviceChangeFlag30d;
 
+    @JsonProperty("device_fingerprint")
+    private String deviceFingerprint;
+
+    @JsonProperty("last_login_ip")
+    private String lastLoginIp;
+
     public AccountActivity() {
     }
 
@@ -117,5 +123,21 @@ public final class AccountActivity {
 
     public void setDeviceChangeFlag30d(boolean deviceChangeFlag30d) {
         this.deviceChangeFlag30d = deviceChangeFlag30d;
+    }
+
+    public String getDeviceFingerprint() {
+        return deviceFingerprint;
+    }
+
+    public void setDeviceFingerprint(String deviceFingerprint) {
+        this.deviceFingerprint = deviceFingerprint;
+    }
+
+    public String getLastLoginIp() {
+        return lastLoginIp;
+    }
+
+    public void setLastLoginIp(String lastLoginIp) {
+        this.lastLoginIp = lastLoginIp;
     }
 }
